@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarship Management System - ER Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .legend {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .legend h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin-right: 30px;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        
+        .legend-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .instructions {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions strong {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        ul {
+            margin-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scholarship Management System</h1>
+        <p class="subtitle">Entity-Relationship (ER) Diagram - Database Schema</p>
+        
+        <div class="instructions">
+            <strong>💡 How to Save This Diagram:</strong>
+            <ul>
+                <li><strong>Right-click</strong> on the diagram below and select <strong>"Save image as"</strong> to save as PNG</li>
+                <li>Or use <strong>Print to PDF</strong> (Ctrl+P) for a PDF version</li>
+                <li>The diagram shows all tables, fields, and relationships in your database</li>
+            </ul>
+        </div>
+        
+        <div class="mermaid">
+            erDiagram
+                STUDENTS ||--o{ SCHOLARSHIP_APPLICATIONS : "applies for"
+                USERS ||--o{ APPLICATION_STATUS : "updates"
+                SCHOLARSHIP_APPLICATIONS ||--o{ APPLICATION_STATUS : "has"
+                SCHOLARSHIP_APPLICATIONS ||--o{ APPLICATION_DOCUMENTS : "contains"
+
+                STUDENTS {
+                    int id PK
+                    string full_name
+                    string username UK
+                    string email UK
+                    string phone
+                    string password
+                    enum gender
+                    timestamp registration_date
+                    timestamp last_login
+                    enum account_status
+                }
+
+                USERS {
+                    int user_id PK
+                    string username UK
+                    string password
+                    string email UK
+                    enum user_type
+                    timestamp created_at
+                    timestamp last_login
+                }
+
+                SCHOLARSHIP_APPLICATIONS {
+                    int application_id PK
+                    int student_id FK
+                    enum scholarship_type
+                    string academic_year
+                    int semester
+                    decimal cgpa
+                    decimal family_income
+                    timestamp applied_date
+                    enum status
+                    decimal amount_requested
+                    decimal amount_approved
+                }
+
+                APPLICATION_STATUS {
+                    int status_id PK
+                    int application_id FK
+                    enum previous_status
+                    enum current_status
+                    int updated_by FK
+                    timestamp status_date
+                    text remarks
+                }
+
+                APPLICATION_DOCUMENTS {
+                    int document_id PK
+                    int application_id FK
+                    enum document_type
+                    string document_path
+                    timestamp upload_date
+                }
+        </div>
+        
+        <div class="legend">
+            <h3>📋 Legend & Symbols</h3>
+            <div class="legend-item">
+                <span class="legend-label">PK</span> = Primary Key (Unique Identifier)
+            </div>
+            <div class="legend-item">
+                <span class="legend-label">FK</span> = Foreign Key (References Another Table)
+            </div>
+            <div class="legend-item">
+                <span class="legend-label">UK</span> = Unique Key (Must Be Unique)
+            </div>
+            <div class="legend-item">
+                <span class="legend-label">||--o{</span> = One-to-Many Relationship
+            </div>
+        </div>
+        
+        <div class="legend">
+            <h3>🗂️ Table Descriptions</h3>
+            <ul>
+                <li><strong>STUDENTS:</strong> Stores student registration information, personal details, and account status</li>
+                <li><strong>USERS:</strong> Manages authentication credentials and user roles (student/admin)</li>
+                <li><strong>SCHOLARSHIP_APPLICATIONS:</strong> Contains scholarship application details including academic info and financial data</li>
+                <li><strong>APPLICATION_STATUS:</strong> Tracks the history of status changes for each application with admin remarks</li>
+                <li><strong>APPLICATION_DOCUMENTS:</strong> Manages uploaded documents linked to specific applications</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>
