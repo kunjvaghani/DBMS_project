@@ -1,84 +1,215 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-  }
-  
-  /* Header Styles */
-  header {
-    background-color: #333;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    background-color: #2c3e50;
     color: #fff;
-    padding: 1rem;
-  }
-  
-  nav {
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+nav {
     display: flex;
     justify-content: center;
-  }
-  
-  nav a {
+}
+
+nav a {
     color: #fff;
     text-decoration: none;
-    margin: 0 1rem;
-  }
-  
-  /* Main Content Styles */
-  main {
-    padding: 2rem;
+    margin: 0 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+nav a:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Main Content Styles */
+main {
+    padding: 3rem 2rem;
     text-align: center;
-  }
-  
-  h1 {
-    margin-bottom: 1rem;
-  }
-  
-  .btn {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    border-radius: 4px;
-    margin-top: 1rem;
-  }
-  
-  /* Form Styles */
-  form {
-    max-width: 400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
-    background-color: #f1f1f1;
-    border-radius: 4px;
-  }
-  
-  form label {
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* Form Styles */
+form {
+    max-width: 450px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
+}
+
+form label {
     display: block;
     margin-bottom: 0.5rem;
-  }
-  
-  form input,
-  form select {
+    font-weight: 500;
+    color: #495057;
+}
+
+form input,
+form select {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #ced4da;
     border-radius: 4px;
-  }
-  
-  form button {
-    background-color: #4CAF50;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+form button {
+    background-color: #3498db;
     color: #fff;
-    padding: 0.75rem 1.5rem;
+    padding: 0.8rem 2rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  /* Footer Styles */
-  footer {
-    background-color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+/* Gender Radio Buttons Styling */
+.gender {
+    margin-bottom: 1rem;
+}
+
+.gender label {
+    display: inline-block;
+    margin-right: 1rem;
+    font-weight: normal;
+    cursor: pointer;
+    color: #495057;
+}
+
+.gender input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #2c3e50;
     color: #fff;
-    padding: 1rem;
+    padding: 1.5rem 0;
     text-align: center;
-  }
+    margin-top: 3rem;
+}
+
+/* Message Box and Overlay Styles */
+.message-box {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: #fff;
+}
+
+.message-box button {
+    background-color: #3498db;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.message-box button:hover {
+    background-color: #2980b9;
+}
+
+.overlay {
+    background-color: rgba(0,0,0,0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    main {
+        padding: 2rem 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    form {
+        padding: 2rem;
+        margin: 1rem;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    nav a {
+        margin: 0.25rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    form {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
