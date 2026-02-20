@@ -1,0 +1,260 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Scholarship</title>
+    <link rel="stylesheet" href="apply.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="./index.html">Home</a>
+            <a href="./register.html">Register</a>
+            <a href="./login.html">Login</a>
+            <a href="./apply.html">Apply</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Scholarship Application Form</h1>
+        
+        <div class="form-container">
+            <form id="scholarshipForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Scholarship Type</label>
+                        <select name="scholarship_type" required>
+                            <option value="">Select Type</option>
+                            <option value="merit">Merit Based</option>
+                            <option value="need-based">Need Based</option>
+                            <option value="sports">Sports</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="research">Research</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Academic Year</label>
+                        <input type="text" name="academic_year" required placeholder="e.g., 2023-2024">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Semester</label>
+                        <input type="number" name="semester" required min="1" max="8">
+                    </div>
+
+                    <div class="form-group">
+                        <label>CGPA</label>
+                        <input type="number" name="cgpa" required step="0.01" min="0" max="10">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Family Annual Income</label>
+                        <input type="number" name="family_income" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amount Requested</label>
+                        <input type="number" name="amount_requested" required min="0">
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+
+    <script>
+        document.getElementById('scholarshipForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/apply-scholarship', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Application submitted successfully!');
+                    window.location.href = '/index.html';
+                } else {
+                    const error = await response.text();
+                    alert(`Error: ${error}`);
+                }
+            } catch (error) {
+                alert('Error submitting application. Please try again.');
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for Scholarship</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="apply.css">
+    <style>
+        .form-container { display: none; }
+        .login-container { margin-bottom: 20px; }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div>
+        <a href="./index.html">Home</a>
+        <a href="./register.html">Register</a>
+        <a href="./login.html">Login</a>
+        <a href="./apply.html">Apply</a>
+    </div> -->
+
+    <header>
+        <nav>
+          <a href="./index.html">Home</a>
+          <a href="./register.html">Register</a>
+          <a href="./login.html">Login</a>
+          <a href="./apply.html">Apply</a>
+          <!-- <a href="./login.html">Status</a> -->
+        </nav>
+      </header>
+
+    <div class="login-container">
+        <h2>Verify Your Credentials</h2>
+        <form id="verifyForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+
+    <div class="form-container" id="scholarshipForm">
+        <h1>Scholarship Application Form</h1>
+        <form id="applyForm">
+            <input type="hidden" id="form_username" name="username">
+            
+            <div>
+                <label for="scholarship_type">Scholarship Type:</label>
+                <select id="scholarship_type" name="scholarship_type" required>
+                    <option value="merit">Merit Based</option>
+                    <option value="need-based">Need Based</option>
+                    <option value="sports">Sports</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="research">Research</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="academic_year">Academic Year:</label>
+                <input type="text" id="academic_year" name="academic_year" required>
+            </div>
+            
+            <div>
+                <label for="semester">Semester:</label>
+                <input type="number" id="semester" name="semester" required>
+            </div>
+            
+            <div>
+                <label for="cgpa">CGPA:</label>
+                <input type="number" step="0.01" id="cgpa" name="cgpa" required>
+            </div>
+            
+            <div>
+                <label for="family_income">Family Annual Income:</label>
+                <input type="number" id="family_income" name="family_income" required>
+            </div>
+            
+            <div>
+                <label for="amount_requested">Amount Requested:</label>
+                <input type="number" id="amount_requested" name="amount_requested" required>
+            </div>
+            
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="this.parentElement.style.display='none'">OK</button>
+    </div>
+
+    <script>
+        document.getElementById('verifyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+
+                if (response.ok) {
+                    document.querySelector('.login-container').style.display = 'none';
+                    document.querySelector('.form-container').style.display = 'block';
+                    document.getElementById('form_username').value = formData.get('username');
+                } else {
+                    document.getElementById('messageText').textContent = 'Invalid credentials. Please try again.';
+                    document.getElementById('messageBox').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        document.getElementById('applyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/apply-scholarship', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+                });
+
+                if (response.ok) {
+                    document.getElementById('messageText').textContent = 'Application submitted successfully!';
+                } else {
+                    document.getElementById('messageText').textContent = 'Error submitting application. Please try again.';
+                }
+                document.getElementById('messageBox').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

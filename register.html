@@ -1,0 +1,192 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Scholarship Management System</title>
+  <link rel="stylesheet" href="style.css">
+
+
+     <script>
+document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert(data.message);
+            window.location.href = data.redirect;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
+
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./register.html">Register</a>
+      <a href="./login.html">Login</a>
+ 
+    </nav>
+  </header>
+
+  <main>
+    <h1>Register</h1>
+    
+      <p></p>
+    
+    <form id="register-form" action="/register" method="POST">
+      <label for="full-name">Full Name:</label>
+      <input type="text" id="full-name" name="full_name" required>
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="prefer-not">Prefer not to say</option>
+      </select>
+
+      <button type="submit">Register</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Scholarship Management System</p>
+  </footer>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Scholarship System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+          <a href="./index.html">Home</a>
+          <a href="./register.html">Register</a>
+          <a href="./login.html">Login</a>
+          <a href="./apply.html">Apply</a>
+          <!-- <a href="./login.html">Status</a> -->
+        </nav>
+      </header>
+
+    <main role="main">
+        <h1>Register</h1>
+        <form id="registerForm" action="/register" method="POST">
+            <div>
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" required>
+            </div>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="gender">
+                <label>Gender:</label>
+                <input type="radio" id="male" name="gender" value="male" required>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+                <input type="radio" id="prefer-not" name="gender" value="prefer-not">
+                <label for="prefer-not">Prefer not to say</label>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </main>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="window.location.href='/login.html'">OK</button>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+                });
+                
+                document.getElementById('messageText').textContent = 'Registration successful! Click OK to proceed to login.';
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('messageBox').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

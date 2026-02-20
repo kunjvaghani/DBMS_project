@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Scholarship System</title>
+    <style>
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <a href="./index.html">Home</a>
+        <a href="./register.html">Register</a>
+        <a href="./login.html">Login</a>
+    </div>
+
+    <main role="main">
+        <h1>Register</h1>
+        <form id="registerForm" action="/register" method="POST">
+            <div>
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" required>
+            </div>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label>Gender:</label>
+                <input type="radio" id="male" name="gender" value="male" required>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+                <input type="radio" id="prefer-not" name="gender" value="prefer-not">
+                <label for="prefer-not">Prefer not to say</label>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </main>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="window.location.href='/login.html'">OK</button>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+                });
+                
+                document.getElementById('messageText').textContent = 'Registration successful! Click OK to proceed to login.';
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('messageBox').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Scholarship System</title>
+    <style>
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <a href="./index.html">Home</a>
+        <a href="./register.html">Register</a>
+        <a href="./login.html">Login</a>
+    </div>
+
+    <main role="main">
+        <h1>Login</h1>
+        <form id="loginForm" action="/login" method="POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </main>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="window.location.href='/apply.html'">OK</button>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+                });
+                
+                if (response.ok) {
+                    document.getElementById('messageText').textContent = 'Login successful! Click OK to proceed.';
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('messageBox').style.display = 'block';
+                } else {
+                    document.getElementById('messageText').textContent = 'Invalid username or password.';
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('messageBox').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- apply.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for Scholarship</title>
+    <style>
+        .form-container { display: none; }
+        .login-container { margin-bottom: 20px; }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <a href="./index.html">Home</a>
+        <a href="./register.html">Register</a>
+        <a href="./login.html">Login</a>
+        <a href="./apply.html">Apply</a>
+    </div>
+
+    <div class="login-container">
+        <h2>Verify Your Credentials</h2>
+        <form id="verifyForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+
+    <div class="form-container" id="scholarshipForm">
+        <h1>Scholarship Application Form</h1>
+        <form id="applyForm">
+            <input type="hidden" id="form_username" name="username">
+            
+            <div>
+                <label for="scholarship_type">Scholarship Type:</label>
+                <select id="scholarship_type" name="scholarship_type" required>
+                    <option value="merit">Merit Based</option>
+                    <option value="need-based">Need Based</option>
+                    <option value="sports">Sports</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="research">Research</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="academic_year">Academic Year:</label>
+                <input type="text" id="academic_year" name="academic_year" required>
+            </div>
+            
+            <div>
+                <label for="semester">Semester:</label>
+                <input type="number" id="semester" name="semester" required>
+            </div>
+            
+            <div>
+                <label for="cgpa">CGPA:</label>
+                <input type="number" step="0.01" id="cgpa" name="cgpa" required>
+            </div>
+            
+            <div>
+                <label for="family_income">Family Annual Income:</label>
+                <input type="number" id="family_income" name="family_income" required>
+            </div>
+            
+            <div>
+                <label for="amount_requested">Amount Requested:</label>
+                <input type="number" id="amount_requested" name="amount_requested" required>
+            </div>
+            
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="this.parentElement.style.display='none'">OK</button>
+    </div>
+
+    <script>
+        document.getElementById('verifyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+
+                if (response.ok) {
+                    document.querySelector('.login-container').style.display = 'none';
+                    document.querySelector('.form-container').style.display = 'block';
+                    document.getElementById('form_username').value = formData.get('username');
+                } else {
+                    document.getElementById('messageText').textContent = 'Invalid credentials. Please try again.';
+                    document.getElementById('messageBox').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        document.getElementById('applyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/apply-scholarship', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+                });
+
+                if (response.ok) {
+                    document.getElementById('messageText').textContent = 'Application submitted successfully!';
+                } else {
+                    document.getElementById('messageText').textContent = 'Error submitting application. Please try again.';
+                }
+                document.getElementById('messageBox').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

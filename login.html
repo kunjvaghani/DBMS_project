@@ -1,0 +1,157 @@
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Scholarship Management System</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+    
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert(data.message);
+                window.location.href = data.redirect;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    </script>
+
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./register.html">Register</a>
+      <a href="./login.html">Login</a>
+      
+    </nav>
+  </header>
+
+  <main>
+    <h1>Login</h1>
+    <p></p>
+    <form id="login-form" action="/login" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Scholarship Management System</p>
+  </footer>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Scholarship System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+          <a href="./index.html">Home</a>
+          <a href="./register.html">Register</a>
+          <a href="./login.html">Login</a>
+          <a href="./apply.html">Apply</a>
+          <!-- <a href="./login.html">Status</a> -->
+        </nav>
+      </header>
+
+    <main role="main">
+        <h1>Login</h1>
+        <form id="loginForm" action="/login" method="POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </main>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="window.location.href='/apply.html'">OK</button>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+                });
+                
+                if (response.ok) {
+                    document.getElementById('messageText').textContent = 'Login successful! Click OK to proceed.';
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('messageBox').style.display = 'block';
+                } else {
+                    document.getElementById('messageText').textContent = 'Invalid username or password.';
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('messageBox').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
