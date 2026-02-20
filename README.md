@@ -171,6 +171,9 @@ scholarship-management-system/
 - Application details
 - Academic and financial information
 
+**er-diagram**
+- also we added er-diagrm.html code for better understanding of tables and joins and how they connected.
+
 **application_status**
 - Status tracking history
 - Admin remarks and updates
